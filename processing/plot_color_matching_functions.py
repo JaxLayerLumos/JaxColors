@@ -33,6 +33,6 @@ if __name__ == '__main__':
     )
 
     plt.tight_layout()
-    plt.savefig('../figures/color_matching_functions.png', format='pdf', transparent=True, bbox_inches='tight')
+    plt.savefig('../figures/color_matching_functions.png', format='png', transparent=True, bbox_inches='tight')
     plt.savefig('../figures/color_matching_functions.pdf', format='pdf', transparent=True, bbox_inches='tight')
     plt.show()
