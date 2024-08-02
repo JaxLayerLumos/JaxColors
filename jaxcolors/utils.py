@@ -4,10 +4,10 @@ from jaxcolors import color_matching_functions
 from jaxcolors import illuminants
 
 
-def get_cmfs(bx, str_color_space='cie1931'):
+def get_cmfs(bx, str_color_space="cie1931"):
     assert isinstance(bx, jnp.ndarray)
 
-    if str_color_space == 'cie1931':
+    if str_color_space == "cie1931":
         cmfs = color_matching_functions.cmfs_cie1931
     else:
         raise ValueError
@@ -17,19 +17,23 @@ def get_cmfs(bx, str_color_space='cie1931'):
     assert jnp.min(cmfs[:, 0]) <= jnp.min(bx)
     assert jnp.max(bx) <= jnp.max(cmfs[:, 0])
 
-    cmfs_interpolated = jnp.concatenate([
-        bx[..., jnp.newaxis],
-        jnp.interp(bx, cmfs[:, 0], cmfs[:, 1])[..., jnp.newaxis],
-        jnp.interp(bx, cmfs[:, 0], cmfs[:, 2])[..., jnp.newaxis],
-        jnp.interp(bx, cmfs[:, 0], cmfs[:, 3])[..., jnp.newaxis],
-    ], axis=1)
+    cmfs_interpolated = jnp.concatenate(
+        [
+            bx[..., jnp.newaxis],
+            jnp.interp(bx, cmfs[:, 0], cmfs[:, 1])[..., jnp.newaxis],
+            jnp.interp(bx, cmfs[:, 0], cmfs[:, 2])[..., jnp.newaxis],
+            jnp.interp(bx, cmfs[:, 0], cmfs[:, 3])[..., jnp.newaxis],
+        ],
+        axis=1,
+    )
 
     return cmfs_interpolated
 
-def get_illuminant(bx, str_color_space='d65'):
+
+def get_illuminant(bx, str_color_space="d65"):
     assert isinstance(bx, jnp.ndarray)
 
-    if str_color_space == 'd65':
+    if str_color_space == "d65":
         illuminant = illuminants.illuminant_d65
     else:
         raise ValueError
@@ -39,9 +43,12 @@ def get_illuminant(bx, str_color_space='d65'):
     assert jnp.min(illuminant[:, 0]) <= jnp.min(bx)
     assert jnp.max(bx) <= jnp.max(illuminant[:, 0])
 
-    illuminant_interpolated = jnp.concatenate([
-        bx[..., jnp.newaxis],
-        jnp.interp(bx, illuminant[:, 0], illuminant[:, 1])[..., jnp.newaxis],
-    ], axis=1)
+    illuminant_interpolated = jnp.concatenate(
+        [
+            bx[..., jnp.newaxis],
+            jnp.interp(bx, illuminant[:, 0], illuminant[:, 1])[..., jnp.newaxis],
+        ],
+        axis=1,
+    )
 
     return illuminant_interpolated
