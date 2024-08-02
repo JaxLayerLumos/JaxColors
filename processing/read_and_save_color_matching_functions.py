@@ -2,6 +2,7 @@ import csv
 
 
 def read_and_save(str_file, file_python, str_variable):
+    print(str_file, str_variable)
     cmfs = []
 
     with open(str_file) as file_csv:
@@ -26,6 +27,6 @@ def read_and_save(str_file, file_python, str_variable):
 if __name__ == '__main__':
     file_python = open('../jaxcolors/color_matching_functions.py', mode='w')
 
-    read_and_save('ciexyz31_1.csv', file_python, 'cmfs')
+    read_and_save('ciexyz31_1.csv', file_python, 'cmfs_cie1931')
 
     file_python.close()
