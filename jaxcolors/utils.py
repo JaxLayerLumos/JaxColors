@@ -1,6 +1,7 @@
 import jax.numpy as jnp
 
 from jaxcolors import color_matching_functions
+from jaxcolors import illuminants
 
 
 def get_cmfs(bx, str_color_space='cie1931'):
@@ -24,3 +25,23 @@ def get_cmfs(bx, str_color_space='cie1931'):
     ], axis=1)
 
     return cmfs_interpolated
+
+def get_illuminant(bx, str_color_space='d65'):
+    assert isinstance(bx, jnp.ndarray)
+
+    if str_color_space == 'd65':
+        illuminant = illuminants.illuminant_d65
+    else:
+        raise ValueError
+
+    illuminant = jnp.array(illuminant)
+    assert illuminant.shape[1] == 2
+    assert jnp.min(illuminant[:, 0]) <= jnp.min(bx)
+    assert jnp.max(bx) <= jnp.max(illuminant[:, 0])
+
+    illuminant_interpolated = jnp.concatenate([
+        bx[..., jnp.newaxis],
+        jnp.interp(bx, illuminant[:, 0], illuminant[:, 1])[..., jnp.newaxis],
+    ], axis=1)
+
+    return illuminant_interpolated
