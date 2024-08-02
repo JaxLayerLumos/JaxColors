@@ -21,7 +21,7 @@ def read_and_save(str_file, file_python, str_variable):
         file_python.write(", ".join(row))
         file_python.write("],\n")
 
-    file_python.write("]")
+    file_python.write("]\n")
 
 
 if __name__ == "__main__":
