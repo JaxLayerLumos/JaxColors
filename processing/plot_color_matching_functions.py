@@ -3,10 +3,7 @@ import matplotlib.pyplot as plt
 from jaxcolors import color_matching_functions
 
 
-if __name__ == '__main__':
-    cmfs = np.array(color_matching_functions.cmfs)
-    print(cmfs.shape)
-
+def plot(cmfs, str_variable):
     plt.rc('text', usetex=True)
 
     fig = plt.figure(figsize=(8, 6))
@@ -33,6 +30,13 @@ if __name__ == '__main__':
     )
 
     plt.tight_layout()
-    plt.savefig('../figures/color_matching_functions.png', format='png', transparent=True, bbox_inches='tight')
-    plt.savefig('../figures/color_matching_functions.pdf', format='pdf', transparent=True, bbox_inches='tight')
+    plt.savefig(f'../figures/color_matching_functions_{str_variable}.png', format='png', transparent=True, bbox_inches='tight')
+    plt.savefig(f'../figures/color_matching_functions_{str_variable}.pdf', format='pdf', transparent=True, bbox_inches='tight')
     plt.show()
+
+
+if __name__ == '__main__':
+    cmfs_cie1931 = np.array(color_matching_functions.cmfs_cie1931)
+    print(cmfs_cie1931.shape)
+
+    plot(cmfs_cie1931, 'cie1931')
