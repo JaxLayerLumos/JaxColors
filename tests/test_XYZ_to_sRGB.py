@@ -7,12 +7,12 @@ from jaxcolors import transform
 
 
 def _test_one_XYZ(XYZ):
-    xyY_colour = colour.XYZ_to_xyY(XYZ)
-    xyY_jaxcolors = onp.array(transform.XYZ_to_xyY(jnp.array(XYZ)))
+    sRGB_colour = colour.XYZ_to_sRGB(XYZ)
+    sRGB_jaxcolors = onp.array(transform.XYZ_to_sRGB(jnp.array(XYZ)))
 
-    onp.testing.assert_allclose(xyY_jaxcolors, xyY_colour)
+    onp.testing.assert_allclose(sRGB_jaxcolors, sRGB_colour)
 
-def test_XYZ_to_xyY():
+def test_XYZ_to_sRGB():
     num_tests = 10000
     random_state = onp.random.RandomState(42)
 

@@ -59,3 +59,31 @@ def XYZ_to_xyY(XYZ):
     y = Y / (X + Y + Z)
 
     return jnp.array([x, y, Y])
+
+
+def XYZ_to_sRGB(XYZ):
+    assert isinstance(XYZ, jnp.ndarray)
+    assert XYZ.ndim == 1
+    assert XYZ.shape[0] == 3
+
+    X = XYZ[0]
+    Y = XYZ[1]
+    Z = XYZ[2]
+
+    R =  3.2406 * X - 1.5372 * Y - 0.4986 * Z
+    G = -0.9689 * X + 1.8758 * Y + 0.0415 * Z
+    B =  0.0557 * X - 0.2040 * Y + 1.0570 * Z
+
+    def transform_nonlinear(C):
+        if C <= 0.0031308:
+            C *= 12.92
+        else:
+            C = 1.055 * (C**(1 / 2.4)) - 0.055
+
+        return C
+
+    R = transform_nonlinear(R)
+    G = transform_nonlinear(G)
+    B = transform_nonlinear(B)
+
+    return jnp.array([R, G, B])
