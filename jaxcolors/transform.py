@@ -44,3 +44,18 @@ def spectrum_to_XYZ(wavelengths, values, str_color_space="cie1931", str_illumina
     Z = numerator_Z / denominator
 
     return jnp.array([X, Y, Z])
+
+
+def XYZ_to_xyY(XYZ):
+    assert isinstance(XYZ, jnp.ndarray)
+    assert XYZ.ndim == 1
+    assert XYZ.shape[0] == 3
+
+    X = XYZ[0]
+    Y = XYZ[1]
+    Z = XYZ[2]
+
+    x = X / (X + Y + Z)
+    y = Y / (X + Y + Z)
+
+    return jnp.array([x, y, Y])
