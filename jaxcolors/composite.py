@@ -15,7 +15,7 @@ def spectrum_to_sRGB(wavelengths, values, str_color_space="cie1931", str_illumin
     return sRGB
 
 
-def spectrum_to_sRGB(wavelengths, values, str_color_space="cie1931", str_illuminant="d65"):
+def spectrum_to_Lab(wavelengths, values, str_color_space="cie1931", str_illuminant="d65"):
     XYZ = transform.spectrum_to_XYZ(wavelengths, values, str_color_space=str_color_space, str_illuminant=str_illuminant)
     Lab = transform.XYZ_to_Lab(XYZ, str_illuminant=str_illuminant)
 
