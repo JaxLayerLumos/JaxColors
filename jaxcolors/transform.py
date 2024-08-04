@@ -87,3 +87,41 @@ def XYZ_to_sRGB(XYZ):
     B = transform_nonlinear(B)
 
     return jnp.array([R, G, B])
+
+def XYZ_to_Lab(XYZ, str_illuminant="d65"):
+    assert isinstance(XYZ, jnp.ndarray)
+    assert XYZ.ndim == 1
+    assert XYZ.shape[0] == 3
+
+    if str_illuminant == "d65":
+        Xn = 95.0489
+        Yn = 100
+        Zn = 108.8840
+    else:
+        raise ValueError
+
+    XYZ *= 100
+
+    X = XYZ[0]
+    Y = XYZ[1]
+    Z = XYZ[2]
+
+    def transform_nonlinear(t):
+        delta = 6 / 29
+
+        if t > delta**3:
+            output = t**(1/3)
+        else:
+            output = 1 / 3 * t * delta**(-2) + 4 / 29
+
+        return output
+
+    L = 116 * transform_nonlinear(Y / Yn) - 16
+    a = 500 * (transform_nonlinear(X / Xn) - transform_nonlinear(Y / Yn))
+    b = 200 * (transform_nonlinear(Y / Yn) - transform_nonlinear(Z / Zn))
+
+    L /= 100
+    a /= 100
+    b /= 100
+
+    return jnp.array([L, a, b])
