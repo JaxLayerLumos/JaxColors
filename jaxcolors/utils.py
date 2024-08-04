@@ -30,10 +30,10 @@ def get_cmfs(bx, str_color_space="cie1931"):
     return cmfs_interpolated
 
 
-def get_illuminant(bx, str_color_space="d65"):
+def get_illuminant(bx, str_illuminant="d65"):
     assert isinstance(bx, jnp.ndarray)
 
-    if str_color_space == "d65":
+    if str_illuminant == "d65":
         illuminant = illuminants.illuminant_d65
     else:
         raise ValueError
