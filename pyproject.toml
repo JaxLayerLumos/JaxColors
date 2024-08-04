@@ -43,4 +43,5 @@ dev = [
     "build",
     "twine",
     "black",
+    "colour-science",
 ]
