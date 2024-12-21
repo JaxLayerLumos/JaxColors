@@ -7,8 +7,10 @@ from jaxcolors import transform
 
 
 def _test_one_XYZ(XYZ):
+    use_clipping = False
+
     sRGB_colour = colour.XYZ_to_sRGB(XYZ)
-    sRGB_jaxcolors = onp.array(transform.XYZ_to_sRGB(jnp.array(XYZ)))
+    sRGB_jaxcolors = onp.array(transform.XYZ_to_sRGB(jnp.array(XYZ), use_clipping=use_clipping))
 
     onp.testing.assert_allclose(sRGB_jaxcolors, sRGB_colour)
 
