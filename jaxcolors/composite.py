@@ -8,9 +8,9 @@ def spectrum_to_xyY(wavelengths, values, str_color_space="cie1931", str_illumina
     return xyY
 
 
-def spectrum_to_sRGB(wavelengths, values, str_color_space="cie1931", str_illuminant="d65"):
+def spectrum_to_sRGB(wavelengths, values, str_color_space="cie1931", str_illuminant="d65", use_clipping=True):
     XYZ = transform.spectrum_to_XYZ(wavelengths, values, str_color_space=str_color_space, str_illuminant=str_illuminant)
-    sRGB = transform.XYZ_to_sRGB(XYZ)
+    sRGB = transform.XYZ_to_sRGB(XYZ, use_clipping=use_clipping)
 
     return sRGB
 

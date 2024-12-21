@@ -37,7 +37,8 @@ def get_sRGB_colour(spectrum):
 
 
 def get_sRGB_jaxcolors(wavelengths, spectrum):
-    return composite.spectrum_to_sRGB(wavelengths, spectrum)
+    use_clipping = False
+    return composite.spectrum_to_sRGB(wavelengths, spectrum, use_clipping=use_clipping)
 
 
 def _test_one_sRGB(sRGB):
