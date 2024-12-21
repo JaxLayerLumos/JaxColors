@@ -61,8 +61,9 @@ def XYZ_to_xyY(XYZ):
     return jnp.array([x, y, Y])
 
 
-def XYZ_to_sRGB(XYZ):
+def XYZ_to_sRGB(XYZ, use_clipping=True):
     assert isinstance(XYZ, jnp.ndarray)
+    assert isinstance(use_clipping, bool)
     assert XYZ.ndim == 1
     assert XYZ.shape[0] == 3
 
@@ -86,7 +87,13 @@ def XYZ_to_sRGB(XYZ):
     G = transform_nonlinear(G)
     B = transform_nonlinear(B)
 
+    if use_clipping:
+        R = jnp.clip(R, 0, 1)
+        G = jnp.clip(G, 0, 1)
+        B = jnp.clip(B, 0, 1)
+
     return jnp.array([R, G, B])
+
 
 def XYZ_to_Lab(XYZ, str_illuminant="d65"):
     assert isinstance(XYZ, jnp.ndarray)
